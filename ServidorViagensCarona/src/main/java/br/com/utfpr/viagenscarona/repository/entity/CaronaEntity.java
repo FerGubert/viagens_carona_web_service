@@ -1,39 +1,52 @@
-package br.com.utfpr.viagenscarona.model;
+package br.com.utfpr.viagenscarona.repository.entity;
 
-//import java.io.Serializable;
-
-import javax.xml.bind.annotation.XmlRootElement;
-
-@XmlRootElement
-public class Carona{ //implements Serializable{
-
-    private int id;
-	private String nome;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+ 
+@Entity
+@Table(name="registro_interesse")
+public class CaronaEntity{
+ 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="id")
+	private int id;
+ 
+	@Column(name="nome")	
+	private String  nome;
+ 
+	@Column(name="contato")
 	private String contato;
+	
+	@Column(name="origem")
 	private String origem;
-    private String destino;
-    private String data;
-    private int numPassageiros;
-    //private InterfaceCli referenciaCliente;
-	private int tipo; //0 para passageiro e 1 para motorista
+	
+	@Column(name="destino")
+	private String destino;
+	
+	@Column(name="data")
+	private String data;
+	
+	@Column(name="numPassageiros")
+	private int numPassageiros;
 
-	public Carona(){}
+	@Column(name="tipo")
+	private int tipo;
 	
-	public Carona(int id, String nome, String contato) {
-		super();
-		this.id = id;
-		this.nome = nome;
-		this.contato = contato;
-	}
+	public CaronaEntity(){}
 	
-    public int getId() {
+	public int getId() {
 		return id;
 	}
-	
-	public void setId(int id) {
+ 
+	public void setCodigo(int id) {
 		this.id = id;
 	}
-
+ 
 	public String getNome() {
 		return nome;
 	}
@@ -41,7 +54,7 @@ public class Carona{ //implements Serializable{
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	
+
 	public String getContato() {
 		return contato;
 	}
@@ -49,7 +62,7 @@ public class Carona{ //implements Serializable{
 	public void setContato(String contato) {
 		this.contato = contato;
 	}
-
+	
     public String getOrigem() {
 		return origem;
 	}
@@ -81,15 +94,7 @@ public class Carona{ //implements Serializable{
 	public void setNumPassageiros(int numPassageiros) {
 		this.numPassageiros = numPassageiros;
 	}
-
-    /*public InterfaceCli getReferenciaCliente() {
-		return referenciaCliente;
-	}
 	
-	public void setReferenciaCliente(InterfaceCli referenciaCliente) {
-		this.referenciaCliente = referenciaCliente;
-	}*/
-
 	public int getTipo() {
 		return tipo;
 	}
@@ -97,4 +102,5 @@ public class Carona{ //implements Serializable{
 	public void setTipo(int tipo) {
 		this.tipo = tipo;
 	}
+ 
 }

@@ -3,6 +3,7 @@ package br.com.utfpr.viagenscarona.model;
 import java.io.Serializable;
 import java.security.PublicKey;
 
+
 public class Usuario implements Serializable{
     
     private String nome;
