@@ -1,11 +1,9 @@
 package br.com.utfpr.viagenscarona.model;
 
-//import java.io.Serializable;
-
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
-public class Carona{ //implements Serializable{
+public class Carona{
 
     private int id;
 	private String nome;
@@ -14,7 +12,6 @@ public class Carona{ //implements Serializable{
     private String destino;
     private String data;
     private int numPassageiros;
-    //private InterfaceCli referenciaCliente;
 	private int tipo; //0 para passageiro e 1 para motorista
 
 	public Carona(){}
@@ -81,14 +78,6 @@ public class Carona{ //implements Serializable{
 	public void setNumPassageiros(int numPassageiros) {
 		this.numPassageiros = numPassageiros;
 	}
-
-    /*public InterfaceCli getReferenciaCliente() {
-		return referenciaCliente;
-	}
-	
-	public void setReferenciaCliente(InterfaceCli referenciaCliente) {
-		this.referenciaCliente = referenciaCliente;
-	}*/
 
 	public int getTipo() {
 		return tipo;

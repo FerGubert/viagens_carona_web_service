@@ -14,7 +14,7 @@ public class CaronaEntity{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id")
-	private int id;
+	private Integer id;
  
 	@Column(name="nome")	
 	private String  nome;
@@ -32,18 +32,18 @@ public class CaronaEntity{
 	private String data;
 	
 	@Column(name="numPassageiros")
-	private int numPassageiros;
+	private Integer numPassageiros;
 
 	@Column(name="tipo")
-	private int tipo;
+	private Integer tipo;
 	
 	public CaronaEntity(){}
 	
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
  
-	public void setCodigo(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
  
@@ -87,19 +87,19 @@ public class CaronaEntity{
 		this.data = data;
 	}
 
-    public int getNumPassageiros() {
+    public Integer getNumPassageiros() {
 		return numPassageiros;
 	}
 	
-	public void setNumPassageiros(int numPassageiros) {
+	public void setNumPassageiros(Integer numPassageiros) {
 		this.numPassageiros = numPassageiros;
 	}
 	
-	public int getTipo() {
+	public Integer getTipo() {
 		return tipo;
 	}
 	
-	public void setTipo(int tipo) {
+	public void setTipo(Integer tipo) {
 		this.tipo = tipo;
 	}
  
