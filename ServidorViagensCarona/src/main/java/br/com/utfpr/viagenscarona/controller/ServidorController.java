@@ -1,6 +1,7 @@
 package br.com.utfpr.viagenscarona.controller;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -37,33 +38,23 @@ public class ServidorController{
 	 * se for o caso notifica os clientes envolvidos
 	 * e faz o controle da quantidade de assentos do motorista envolvido
 	 * */
-	//@POST
-	@GET
-	//@Consumes("application/json; charset=UTF-8")
+	@POST
+	@Consumes("application/json; charset=UTF-8")
 	@Produces("text/plain")
 	@Path("/registrarInteresse")
-	//public int RegistrarInteresse(Carona carona){
-	public int RegistrarInteresse(){
+	public int RegistrarInteresse(Carona carona){
  
 		CaronaEntity entityNew = new CaronaEntity();
 		 
 		try{
  
-			/*entityNew.setNome(carona.getNome());
+			entityNew.setNome(carona.getNome());
 			entityNew.setContato(carona.getContato());
 			entityNew.setOrigem(carona.getOrigem());
 			entityNew.setDestino(carona.getDestino());
 			entityNew.setData(carona.getData());
 			entityNew.setNumPassageiros(carona.getNumPassageiros());
-			entityNew.setTipo(carona.getTipo());*/
-			
-			entityNew.setNome("Fernanda");
-			entityNew.setContato("36985569");
-			entityNew.setOrigem("Campina");
-			entityNew.setDestino("Curitiba");
-			entityNew.setData("23-08-2021");
-			entityNew.setNumPassageiros(2);
-			entityNew.setTipo(0);
+			entityNew.setTipo(carona.getTipo());
  
 			repository.Salvar(entityNew);
  
@@ -121,16 +112,12 @@ public class ServidorController{
 	 * Esse método busca as caronas disponíveis
 	 * de acordo com os parâmetros de interesse
 	 * */
-	//@POST
 	@GET
-	//@Consumes("application/json; charset=UTF-8")
 	@Produces("text/plain")
-	@Path("/consultarCaronas")
-	//public String ConcultarCaronas(Carona carona){
-	public String ConsultarCaronas(){
+	@Path("/consultarCaronas/{origem}{destino}{data}")
+	public String ConcultarCaronas(@PathParam("origem") String origem, @PathParam("destino") String destino, @PathParam("data") String data){
 		
-		//int quantidadeCaronas = repository.GetCaronasDisponiveis(carona.getOrigem(), carona.getDestino(), carona.getData());
-		int quantidadeCaronas = repository.GetCaronasDisponiveis("Campina", "Curitiba", "23-08-2021");
+		int quantidadeCaronas = repository.GetCaronasDisponiveis(origem, destino, data);
 		
 		return "EXISTEM " + quantidadeCaronas + " CARONAS DISPONIVEIS.";
 	}
@@ -139,17 +126,13 @@ public class ServidorController{
 	 * Esse método cancela um registro de interesse
 	 * de acordo com o id e o nome
 	 * */
-	//@POST
-	@GET
-	//@Consumes("application/json; charset=UTF-8")
+	@DELETE
 	@Produces("text/plain")
-	@Path("/cancelarRegistroInteresse")
-	//public String CancelarRegistroInteresse(Carona carona){
-	public String CancelarRegistroInteresse(){
-		
+	@Path("/cancelarRegistroInteresse/{id}")
+	public String CancelarRegistroInteresse(@PathParam("id") Integer id){
+		System.out.println(id);
 		try {
-			//repository.Excluir(carona.getId());
-			repository.Excluir(6);
+			repository.Excluir(id);
 		}catch (Exception e) {
 			System.out.println("Erro ao excluir o registro! " + e.getMessage());
 			return "ERRO AO CANCELAR REGISTRO DE INTERESSE.";
@@ -157,5 +140,12 @@ public class ServidorController{
 		
 		return "CANCELAMENTO REALIZADO COM SUCESSO.";
 	}
+	
+	/*@GET
+	@Path("prices")
+	@Produces("text/event-stream")
+	public void getStockPrices(@Context SseEventSink sseEventSink, @Context Sse sse) {
+	    //...
+	}*/
 	
 }

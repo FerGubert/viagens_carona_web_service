@@ -98,7 +98,7 @@ public class CaronaRepository {
 	}
 	
 	/**
-	 * CONSULTA OFERTADAS CARONA COM MESMA ORIGEM, DESTINO E DATA 
+	 * CONSULTA CARONAS OFERTADAS COM MESMA ORIGEM, DESTINO E DATA 
 	 * */
 	public int GetCaronasDisponiveis(String origem, String destino, String data){
 		
