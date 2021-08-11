@@ -6,6 +6,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.POST;
 
 import br.com.utfpr.viagenscarona.model.Carona;
@@ -47,7 +48,7 @@ public class ServidorController{
 		CaronaEntity entityNew = new CaronaEntity();
 		 
 		try{
- 
+			System.out.println("------> ENTREI");		
 			entityNew.setNome(carona.getNome());
 			entityNew.setContato(carona.getContato());
 			entityNew.setOrigem(carona.getOrigem());
@@ -114,8 +115,8 @@ public class ServidorController{
 	 * */
 	@GET
 	@Produces("text/plain")
-	@Path("/consultarCaronas/{origem}{destino}{data}")
-	public String ConcultarCaronas(@PathParam("origem") String origem, @PathParam("destino") String destino, @PathParam("data") String data){
+	@Path("/consultarCaronas")
+	public String ConcultarCaronas(@QueryParam("origem") String origem, @QueryParam("destino") String destino, @QueryParam("data") String data){
 		
 		int quantidadeCaronas = repository.GetCaronasDisponiveis(origem, destino, data);
 		
@@ -128,9 +129,9 @@ public class ServidorController{
 	 * */
 	@DELETE
 	@Produces("text/plain")
-	@Path("/cancelarRegistroInteresse/{id}")
-	public String CancelarRegistroInteresse(@PathParam("id") Integer id){
-		System.out.println(id);
+	@Path("/cancelarRegistroInteresse")
+	public String CancelarRegistroInteresse(@QueryParam("id") Integer id){
+		System.out.println("------->" + id);
 		try {
 			repository.Excluir(id);
 		}catch (Exception e) {
