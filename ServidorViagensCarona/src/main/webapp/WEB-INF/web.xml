@@ -20,4 +20,14 @@
     <url-pattern>/rest/*</url-pattern>
  </servlet-mapping>
  
+ <servlet>
+    <servlet-name>SseResource</servlet-name>
+    <servlet-class>br.com.utfpr.viagenscarona.controller.SseResource</servlet-class>
+    <async-supported>true</async-supported>
+ </servlet>
+ <servlet-mapping>
+    <servlet-name>SseResource</servlet-name>
+    <url-pattern>/SseResource</url-pattern>
+ </servlet-mapping>
+ 
 </web-app>

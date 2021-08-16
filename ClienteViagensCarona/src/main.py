@@ -1,5 +1,8 @@
 import requests
+from threading import Thread
+
 from src.model.carona import Carona
+from sseclient import SSEClient
 
 URL_API = "http://localhost:8086/ServidorViagensCarona/rest/service/"
 
@@ -60,7 +63,26 @@ def pedirDadosCancelamento(carona):
     print("############### CONSULTA DE CARONAS ##################")
     carona.setId(input("ID:"))
 
+
+class Th(Thread):
+
+    def __init__(self, nomeCliente):
+        Thread.__init__(self)
+        self.nomeCliente = nomeCliente
+
+    def run(self):
+        endereco = "http://localhost:8086/ServidorViagensCarona/SseResource"
+        headers = {'Accept': 'text/event-stream'}
+        payload = {'nomeCliente': self.nomeCliente}
+
+        messages = SSEClient(endereco, headers=headers, params=payload)
+
+        for msg in messages:
+            print(msg)
+
 if __name__ == '__main__':
+
+    controleThread = 0
 
     carona = Carona()
     opcao = menu()
@@ -71,6 +93,12 @@ if __name__ == '__main__':
 
             endpoint = 'registrarInteresse';
             pedirDadosCarona(carona)  # solicita dados da carona
+
+            nomeCliente = carona.getNome()
+            if (controleThread == 0):
+                th = Th(nomeCliente)
+                th.start()
+                controleThread = 1
 
             if (carona.getTipo() == 0):
                 numPassageiros = 0
@@ -89,10 +117,10 @@ if __name__ == '__main__':
             response = requests.post(endereco, json=jsonOb) # faz a requisição
 
             # verifica a resposta recebida
-            if (response.text == "1"):
-                print("OPERAÇÃO FOI REALIZADA COM SUCESSO")
-            else:
+            if (response.text == "0"):
                 print("OPERAÇÃO NÃO FOI REALIZADA")
+            else:
+                print("OPERAÇÃO FOI REALIZADA COM SUCESSO. SEU ID É " + response.text + ".")
 
         elif (opcao == '2'):  # consultar caronas
 
@@ -117,6 +145,18 @@ if __name__ == '__main__':
 
             response = requests.delete(endereco, params=payload)  # faz requisicao
             print(response.text)
+
+        elif (opcao == '4'):
+
+            endpoint = 'SseResource'
+            endereco = URL_API + endpoint
+            payload = {'nomeCliente': 'fer'}
+            headers = {'Accept': 'text/event-stream'}
+
+            messages = SSEClient(endereco, headers=headers, params=payload)
+
+            for msg in messages:
+                print(msg)
 
         else:
             break;

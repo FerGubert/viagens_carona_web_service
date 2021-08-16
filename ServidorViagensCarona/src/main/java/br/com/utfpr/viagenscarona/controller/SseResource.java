@@ -1,46 +1,34 @@
 package br.com.utfpr.viagenscarona.controller;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.ejb.Singleton;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
-import javax.ws.rs.sse.OutboundSseEvent;
-import javax.ws.rs.sse.Sse;
-import javax.ws.rs.sse.SseEventSink;
+import info.macias.sse.servlet3.ServletEventTarget;
 
- 
-@Path("/receberNotificacao")
-@Singleton
-public class SseResource{
- 
-	@Context
-	Sse sse;
-	Map<String, SseEventSink> mapaClientes = new HashMap<String, SseEventSink>();
+@WebServlet(asyncSupported = true)
+public class SseResource extends HttpServlet{
 	
-    @GET
-    public void registraCliente(@Context SseEventSink sseEventSink, @QueryParam("nomeCliente") String nomeCliente) {
-    	mapaClientes.put(nomeCliente, sseEventSink);
-    	enviaNotificacao(nomeCliente);
+	ServletEventTarget target;
+	static Map<String, ServletEventTarget> mapaClientes = new HashMap<String, ServletEventTarget>();
+	
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
+		target = new ServletEventTarget(req).ok().open();
+		mapaClientes.put(req.getParameter("nomeCliente"), target);
     }
-    
-    @Produces("text/event-stream")
-    public void enviaNotificacao(String nomeCliente) {
-    	SseEventSink sseEventSink = mapaClientes.get(nomeCliente);
-        OutboundSseEvent sseEvent = (OutboundSseEvent) sse.newEventBuilder()
-	        .name("teste")
-	        .mediaType(MediaType.APPLICATION_JSON_TYPE)
-	        .data("Passageiro/Motorista")
-	        .build();
-	    sseEventSink.send(sseEvent);
 
+    public void enviaNotificacao(String nomeClienteTarget, String info) throws IOException{
+    	ServletEventTarget channelTarget;
+    	channelTarget = mapaClientes.get(nomeClienteTarget);
+    	System.out.println(channelTarget);
+    	channelTarget.send("givenEvent", info);
     }
-       
-
+	
 }
+
