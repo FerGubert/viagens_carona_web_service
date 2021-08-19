@@ -4,7 +4,7 @@ from sseclient import SSEClient
 def mostraNotificacao(nome, contato, tipo):
     tipoUsuario = []
 
-    if (tipo == 0):
+    if (tipo == "0"):
         tipoUsuario.append("PASSAGEIRO")
         tipoUsuario.append("MOTORISTA")
     else:

@@ -44,21 +44,29 @@ def pedirDadosCarona(carona):
     else:
         carona.setTipo(1);
         print("\t\t\t\t\t\t\t#\n");
-        carona.setNumPassageiros(input("\nDIGITE O NUMERO DE PASSAGEIROS QUE DESEJA DAR CARONA\t#"));
+        carona.setNumPassageiros(input("\nDIGITE O NUMERO DE PASSAGEIROS QUE DESEJA DAR CARONA\t#\n"));
 
 def pedirDadosConsultaCarona(carona):
     print("\n")
     print("############### CONSULTA DE CARONAS ##################")
+    print("\t\t\t\t\t\t\t#\n")
+    print("\t\tDIGITE OS DADOS ABAIXO\t\t\t#\n")
+
     carona.setOrigem(input("Origem:"))
     print("\t\t\t\t\t\t\t#\n")
     carona.setDestino(input("Destino:"))
     print("\t\t\t\t\t\t\t#\n")
     carona.setData(input("Data:"))
+    print("\t\t\t\t\t\t\t#\n")
 
 def pedirDadosCancelamento(carona):
     print("\n")
-    print("############### CONSULTA DE CARONAS ##################")
+    print("######## CANCELAMENTO DE REGISTRO DE INTERESSE ##########")
+    print("\t\t\t\t\t\t\t#\n")
+    print("\t\tDIGITE OS DADOS ABAIXO\t\t\t#\n")
+
     carona.setId(input("ID:"))
+    print("\t\t\t\t\t\t\t#\n")
 
 if __name__ == '__main__':
 
@@ -100,7 +108,7 @@ if __name__ == '__main__':
             if (response.text == "0"):
                 print("OPERAÇÃO NÃO FOI REALIZADA")
             else:
-                print("OPERAÇÃO FOI REALIZADA COM SUCESSO. SEU ID É " + response.text + ".")
+                print("\nOPERAÇÃO FOI REALIZADA COM SUCESSO. SEU ID É " + response.text + ".")
 
         elif (opcao == '2'):  # consultar caronas
 
