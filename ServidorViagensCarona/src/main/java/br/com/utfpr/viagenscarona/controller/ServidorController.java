@@ -136,7 +136,7 @@ public class ServidorController{
 	@GET
 	@Produces("text/plain")
 	@Path("/consultarCaronas")
-	public String ConcultarCaronas(@QueryParam("origem") String origem, @QueryParam("destino") String destino, @QueryParam("data") String data){
+	public String ConsultarCaronas(@QueryParam("origem") String origem, @QueryParam("destino") String destino, @QueryParam("data") String data){
 		
 		int quantidadeCaronas = repository.GetCaronasDisponiveis(origem, destino, data);
 		
