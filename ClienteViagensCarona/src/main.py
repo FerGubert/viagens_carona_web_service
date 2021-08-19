@@ -1,17 +1,14 @@
 import requests
-from threading import Thread
 
 from src.model.carona import Carona
-from sseclient import SSEClient
+from src.th import Th
 
 URL_API = "http://localhost:8086/ServidorViagensCarona/rest/service/"
 
 def menu():
-    print(
-        "##################################################################################################################");
-    print(
-        "------------------------- AÇÕES ----------------------- # ---------------------- NOTIFICAÇÕES --------------------");
-    print("\t\t\t\t\t\t\t\t\t\t#");
+    print("##################################################################################################################");
+    print("------------------------- AÇÕES ----------------------- # ---------------------- NOTIFICAÇÕES --------------------");
+    print("\t\t\t\t\t\t\t#");
     print("\tOLA, SEJA BEM VINDO AO TALK TALK CAR\t\t#");
     print("\t\t\t\t\t\t\t#");
     print("\t   ESCOLHA UM DAS OPÇÕES ABAIXO\t\t\t#");
@@ -62,23 +59,6 @@ def pedirDadosCancelamento(carona):
     print("\n")
     print("############### CONSULTA DE CARONAS ##################")
     carona.setId(input("ID:"))
-
-
-class Th(Thread):
-
-    def __init__(self, nomeCliente):
-        Thread.__init__(self)
-        self.nomeCliente = nomeCliente
-
-    def run(self):
-        endereco = "http://localhost:8086/ServidorViagensCarona/SseResource"
-        headers = {'Accept': 'text/event-stream'}
-        payload = {'nomeCliente': self.nomeCliente}
-
-        messages = SSEClient(endereco, headers=headers, params=payload)
-
-        for msg in messages:
-            print(msg)
 
 if __name__ == '__main__':
 
@@ -145,20 +125,5 @@ if __name__ == '__main__':
 
             response = requests.delete(endereco, params=payload)  # faz requisicao
             print(response.text)
-
-        elif (opcao == '4'):
-
-            endpoint = 'SseResource'
-            endereco = URL_API + endpoint
-            payload = {'nomeCliente': 'fer'}
-            headers = {'Accept': 'text/event-stream'}
-
-            messages = SSEClient(endereco, headers=headers, params=payload)
-
-            for msg in messages:
-                print(msg)
-
-        else:
-            break;
 
         opcao = menu()

@@ -26,8 +26,7 @@ public class SseResource extends HttpServlet{
     public void enviaNotificacao(String nomeClienteTarget, String info) throws IOException{
     	ServletEventTarget channelTarget;
     	channelTarget = mapaClientes.get(nomeClienteTarget);
-    	System.out.println(channelTarget);
-    	channelTarget.send("givenEvent", info);
+    	channelTarget.send("Evento", info);
     }
 	
 }
