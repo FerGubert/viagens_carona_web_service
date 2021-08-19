@@ -1,5 +1,4 @@
 from threading import Thread
-import threading
 from sseclient import SSEClient
 
 def mostraNotificacao(nome, contato, tipo):
